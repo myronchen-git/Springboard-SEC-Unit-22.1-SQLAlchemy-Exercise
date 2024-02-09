@@ -1,6 +1,6 @@
 """Blogly application."""
 
-from flask import Flask
+from flask import Flask, redirect, render_template
 from flask_debugtoolbar import DebugToolbarExtension
 
 from models import User, connect_db, db
@@ -21,3 +21,17 @@ app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 debug = DebugToolbarExtension(app)
 
 # ==================================================
+
+
+@app.route("/")
+def root():
+    return redirect("/users")
+
+
+@app.route("/users")
+def list_users():
+    """Lists all users."""
+
+    users = User.query.all()
+
+    return render_template("listusers.html", users=users)
