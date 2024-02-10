@@ -66,3 +66,31 @@ def user_details(user_id):
     user = User.query.get_or_404(user_id)
 
     return render_template("userdetails.html", user=user)
+
+
+@app.route("/users/<int:user_id>/edit")
+def display_edit_user_form(user_id):
+    """Displays the form to edit a user."""
+
+    user = User.query.get_or_404(user_id)
+
+    return render_template("edituser.html", user=user)
+
+
+@app.route("/users/<int:user_id>/edit", methods=["post"])
+def edit_user(user_id):
+    """Edits the user details."""
+
+    first_name = request.form["first-name"]
+    last_name = request.form["last-name"]
+    image_url = request.form["image-url"]
+
+    user = User.query.get_or_404(user_id)
+    user.first_name = first_name
+    user.last_name = last_name
+    user.image_url = image_url
+
+    db.session.add(user)
+    db.session.commit()
+
+    return redirect("/users")
