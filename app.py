@@ -48,11 +48,11 @@ def display_add_user_form():
 def add_user():
     """Processes new user and redirect to list."""
 
-    first_name = request.form["first-name"]
-    last_name = request.form["last-name"]
-    image_url = request.form["image-url"]
-
-    user = User(first_name=first_name, last_name=last_name, image_url=image_url)
+    user = User(
+        first_name=request.form["first-name"],
+        last_name=request.form["last-name"],
+        image_url=request.form["image-url"],
+    )
     db.session.add(user)
     db.session.commit()
 
@@ -81,14 +81,10 @@ def display_edit_user_form(user_id):
 def edit_user(user_id):
     """Edits the user details."""
 
-    first_name = request.form["first-name"]
-    last_name = request.form["last-name"]
-    image_url = request.form["image-url"]
-
     user = User.query.get_or_404(user_id)
-    user.first_name = first_name
-    user.last_name = last_name
-    user.image_url = image_url
+    user.first_name = request.form["first-name"]
+    user.last_name = request.form["last-name"]
+    user.image_url = request.form["image-url"]
 
     db.session.add(user)
     db.session.commit()
