@@ -56,8 +56,8 @@ class FlaskTests(TestCase):
 
             # THEN
             self.assertEqual(resp.status_code, 200)
-            self.assertIn(f"{self.users[0].first_name} {self.users[0].last_name}", html)
-            self.assertIn(f"{self.users[1].first_name} {self.users[1].last_name}", html)
+            self.assertIn(self.users[0].full_name, html)
+            self.assertIn(self.users[1].full_name, html)
 
     def test_add_user(self):
         """Tests adding a new user."""
@@ -138,8 +138,6 @@ class FlaskTests(TestCase):
 
             # THEN
             self.assertEqual(resp.status_code, 200)
-            self.assertNotIn(
-                f"{self.users[1].first_name} {self.users[1].last_name}", html
-            )
+            self.assertNotIn(self.users[1].full_name, html)
 
             self.assertIsNone(user)

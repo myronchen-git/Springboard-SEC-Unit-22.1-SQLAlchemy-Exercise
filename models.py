@@ -32,3 +32,9 @@ class User(db.Model):
             f"last_name={self.last_name}, "
             f"image_url={self.image_url})>"
         )
+
+    @property
+    def full_name(self):
+        """Property for returning the full name."""
+
+        return f"{self.first_name} {self.last_name}"
