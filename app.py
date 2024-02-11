@@ -32,7 +32,7 @@ def root():
 def list_users():
     """Lists all users."""
 
-    users = User.query.all()
+    users = User.query.order_by(User.last_name, User.first_name).all()
 
     return render_template("listusers.html", users=users)
 
